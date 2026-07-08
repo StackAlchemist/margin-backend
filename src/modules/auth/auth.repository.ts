@@ -1,18 +1,29 @@
 import { prisma } from "../../lib/prisma";
 
-export class AuthRepository {
-    async findByEmail(email: string) {
-        return await prisma.user.findUnique({
-            where: { email },
-        })
-    }
+export const findUserByEmail = (email: string) => {
+  return prisma.user.findUnique({
+    where: { email },
+  });
+};
 
-    async create(data: 
-        { username: string; 
-        email: string; 
-        password: string }) {
-            return prisma.user.create({
-                data,
-            })
-        }
-}
+export const createUser = (data: {
+  username: string;
+  email: string;
+  password: string;
+}) => {
+  return prisma.user.create({
+    data,
+  });
+};
+
+export const updateRefreshTokenHash = (
+  userId: string,
+  refreshTokenHash: string
+) => {
+  return prisma.user.update({
+    where: { id: userId },
+    data: {
+      refreshTokenHash,
+    },
+  });
+};
