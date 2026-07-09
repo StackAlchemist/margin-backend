@@ -14,13 +14,17 @@ import {
     generateAccessToken, 
     generateRefreshToken 
 } from "../../utils/jwt";
+import { ApiError } from "../../utils/ApiError"
 
 
 export const register = async (payload: RegisterSchema) => {
     const existingUser = await findeUserByEmail(payload.email);
 
     if (existingUser) {
-        throw new Error("User already exists");
+        throw new ApiError(
+            409,
+            "Email already exists."
+        );
     }
 
     const hashedPassword = await hashPassword(payload.password);

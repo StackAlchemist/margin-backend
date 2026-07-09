@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { register } from "./auth.service";
 import { sendResponse } from "../../utils/response";
+import { asyncHandler } from "../../utils/asyncHandler"
 
-export const registerController = async (req: Request, res: Response, next: NextFunction) => {
+export const registerController = asyncHandler(async (req, res) => {
 
-    try {
+ 
 
     const result = await register(req.body);
 
@@ -13,7 +14,5 @@ export const registerController = async (req: Request, res: Response, next: Next
         201,
         "Registration successful",
         result
-    )}catch (error) {
-        next(error)
-    }
-}
+    )
+})
