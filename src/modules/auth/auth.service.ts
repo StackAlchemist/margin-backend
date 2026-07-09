@@ -3,7 +3,7 @@
 // Save the user.
 // Return the new user (without the password).
 
-import { registerSchema } from "./auth.validation";
+import { registerSchema, RegisterSchema } from "./auth.validation";
 import { hashPassword } from "../../utils/hash";
 import {
     createUser,
@@ -18,7 +18,7 @@ import { ApiError } from "../../utils/ApiError"
 
 
 export const register = async (payload: RegisterSchema) => {
-    const existingUser = await findeUserByEmail(payload.email);
+    const existingUser = await findUserByEmail(payload.email);
 
     if (existingUser) {
         throw new ApiError(
